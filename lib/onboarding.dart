@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:main/app_theme.dart';
+import 'package:main/style/app_theme.dart';
+import 'package:main/signin.dart';
+import 'package:main/utils/size_utils.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -37,7 +39,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   }
 
   void _signUpClick() {
-    Navigator.pop(context);
+    _animationController?.animateTo(0.2);
+    Navigator.push<dynamic>(
+      context,
+      MaterialPageRoute<dynamic>(
+        builder: (BuildContext context) => SignInScreen(),
+      ),
+    );
   }
 
   Widget _pageView() {
@@ -221,6 +229,7 @@ class SecondView1 extends StatelessWidget {
               SlideTransition(
                 position: _imageAnimation,
                 child: Container(
+                  margin: getMargin(all: 20.0),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.5,
                   child: Image.asset('assets/images/slide_1.png'),
@@ -237,8 +246,7 @@ class SecondView1 extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height * 0.5 + 100,
+                          height: MediaQuery.of(context).size.height * 0.5 + 20,
                         ),
                         Center(
                           child: Text(
@@ -333,6 +341,7 @@ class SecondView2 extends StatelessWidget {
       child: SlideTransition(
         position: _secondHalfAnimation,
         child: Container(
+          margin: getMargin(all: 20.0),
           child: Stack(
             children: [
               SlideTransition(
@@ -354,8 +363,7 @@ class SecondView2 extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height * 0.5 + 100,
+                          height: MediaQuery.of(context).size.height * 0.5 + 20,
                         ),
                         Center(
                           child: Text(
