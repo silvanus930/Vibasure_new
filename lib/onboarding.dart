@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:main/app_theme.dart';
-import 'package:main/center_next_button.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -15,8 +14,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 8));
-    _animationController?.animateTo(0.0);
+        AnimationController(vsync: this, duration: Duration(seconds: 4));
+    _animationController?.animateTo(0.2);
     super.initState();
   }
 
@@ -41,6 +40,42 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     Navigator.pop(context);
   }
 
+  Widget _pageView() {
+    int _selectedIndex = 0;
+
+    if (_animationController!.value >= 0.7) {
+      _selectedIndex = 3;
+    } else if (_animationController!.value >= 0.5) {
+      _selectedIndex = 2;
+    } else if (_animationController!.value >= 0.3) {
+      _selectedIndex = 1;
+    } else if (_animationController!.value >= 0.1) {
+      _selectedIndex = 0;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (var i = 0; i < 4; i++)
+            Padding(
+              padding: const EdgeInsets.all(4),
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 480),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(32),
+                  color: Color(0xFFFFFFFF),
+                ),
+                width: _selectedIndex == i ? 30 : 10,
+                height: 10,
+              ),
+            )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     void initState() {
@@ -48,10 +83,72 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
     }
 
     return SafeArea(
-      child: Scaffold(
-          backgroundColor: AppTheme.bgColor,
-          body: Stack(
-            children: [
+        child: Scaffold(
+            backgroundColor: AppTheme.bgColor,
+            body: Stack(children: [
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  decoration: const BoxDecoration(
+                    color: AppTheme.mainColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40.0),
+                        topRight: Radius.circular(40.0)),
+                  ),
+                  child: Center(
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          bottom: 60,
+                          child: Center(
+                              child: AnimatedBuilder(
+                            animation: _animationController!,
+                            builder: (context, child) => AnimatedOpacity(
+                              opacity: _animationController!.value >= 0.2 &&
+                                      _animationController!.value <= 0.6
+                                  ? 1
+                                  : 0,
+                              duration: Duration(milliseconds: 480),
+                              child: _pageView(),
+                            ),
+                          )),
+                        ),
+                        Positioned(
+                          bottom: 20,
+                          right: 0,
+                          left: 0,
+                          child: Center(
+                            child: MaterialButton(
+                              minWidth: 200,
+                              height: 50,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                //side: BorderSide(color: Colors.white),
+                              ),
+                              elevation: 1,
+                              color: AppTheme.buttonColor,
+                              onPressed: (() {
+                                _onNextClick();
+                              }),
+                              child: Text(
+                                "Get Started!",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               ClipRect(
                 child: Stack(
                   children: [
@@ -61,16 +158,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                     SecondView2(
                       animationController: _animationController!,
                     ),
-                    CenterNextButton(
-                      animationController: _animationController!,
-                      onNextClick: _onNextClick,
-                    ),
                   ],
                 ),
-              )
-            ],
-          )),
-    );
+              ),
+            ])));
   }
 }
 
@@ -123,7 +214,7 @@ class SecondView1 extends StatelessWidget {
     return SlideTransition(
       position: _firstHalfAnimation,
       child: SlideTransition(
-        position: _secondHalfAnimation,
+        position: _firstHalfAnimation,
         child: Container(
           child: Stack(
             children: [
@@ -204,7 +295,7 @@ class SecondView2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _firstHalfAnimation =
-        Tween<Offset>(begin: Offset(0, 1), end: Offset(0, 0)).animate(
+        Tween<Offset>(begin: Offset(3, 0), end: Offset(0, 0)).animate(
       CurvedAnimation(
         parent: animationController,
         curve: Interval(
@@ -226,7 +317,7 @@ class SecondView2 extends StatelessWidget {
       ),
     );
     final _imageAnimation =
-        Tween<Offset>(begin: Offset(0, 0), end: Offset(-2, 0)).animate(
+        Tween<Offset>(begin: Offset(0, 0), end: Offset(0, -2)).animate(
       CurvedAnimation(
         parent: animationController,
         curve: Interval(
