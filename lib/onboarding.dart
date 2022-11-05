@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:main/style/app_theme.dart';
 import 'package:main/signin.dart';
 import 'package:main/utils/size_utils.dart';
+import 'package:main/widgets/common_widget.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -130,27 +131,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
                           right: 0,
                           left: 0,
                           child: Center(
-                            child: MaterialButton(
-                              minWidth: 200,
-                              height: 50,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                //side: BorderSide(color: Colors.white),
-                              ),
-                              elevation: 1,
-                              color: AppTheme.buttonColor,
-                              onPressed: (() {
-                                _onNextClick();
-                              }),
-                              child: Text(
-                                "Get Started!",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
+                              child: CommonWidgets.getAppButton("Get Started!",
+                                  () {
+                            _onNextClick();
+                          })),
                         ),
                       ],
                     ),

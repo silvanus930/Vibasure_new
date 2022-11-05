@@ -10,7 +10,7 @@ class AppTheme {
   static const Color grey = Color(0xFF3A5160);
   static const Color dark_grey = Color(0xFF313A44);
 
-  static const Color bgColor = Color(0xFFE6E6E6);
+  static const Color bgColor = Color(0xFFF9F9F9);
   static const Color mainColor = Color(0xFFDD8139);
   static const Color buttonColor = Color(0xFFFAAD44);
 

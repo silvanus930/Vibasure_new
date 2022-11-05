@@ -72,6 +72,7 @@ class CustomTextFormField extends StatelessWidget {
   _buildTextFormFieldWidget() {
     return Container(
       width: getHorizontalSize(width ?? 0),
+      height: getVerticalSize(70.0),
       margin: margin,
       child: TextFormField(
         controller: controller,
